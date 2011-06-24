@@ -1,0 +1,54 @@
+import acdr
+from acdr.sqlite2 import DISPLAY_COLUMNS
+from acdr import cdr
+from acdr import elapsed_time
+from aspen import Response
+
+SORT_COL = 'iSortCol_%d'
+SORT_DIR = 'sSortDir_%d'
+SEARCH_STR = 'sSearch_%d'
+
+
+print("AJAX Request received")
+
+start = int(request.body.one('iDisplayStart'))
+length = int(request.body.one('iDisplayLength'))
+
+# Get search string
+search = request.body.one('sSearch')
+
+# Parse sorting settings
+sortnbr = 0
+sorting = []
+while (SORT_COL % sortnbr) in request.body:
+    columnnbr = int(request.body.one(SORT_COL % sortnbr))
+    sortdirection = request.body.one(SORT_DIR % sortnbr)
+    sortnbr = sortnbr + 1
+    sorting.append([ DISPLAY_COLUMNS[columnnbr], sortdirection ])
+
+# Search strings, these values are provided for each column on every request, 
+# but not all filled with data...
+columnnbr = 0
+searching = []
+search_anything = False
+while (SEARCH_STR % columnnbr) in request.body:
+    str = request.body.one(SEARCH_STR % columnnbr)
+    if str != '':
+        search_anything = True
+    searching.append(str)
+    columnnbr = columnnbr + 1
+
+if search_anything:
+    print('Search')
+    rows = cdr.search_read_page(searching, start, length, sorting)
+else:
+    print('No Search')
+    rows = cdr.read_page(start, length, sorting)
+
+response.body = {
+    'sEcho': int(request.body.one('sEcho')),
+    'iTotalRecords': cdr.total(),
+    'iTotalDisplayRecords': cdr.total(),
+    'aaData': rows
+    }
+

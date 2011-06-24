@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>Asterisk Call Detail Records</title>
+        <style>
+            @import url("/css/style.css");
+        </style>
+        <style>
+            @import url("/css/table.css");
+        </style>
+        <script src="/js/jquery-1.6.1.min.js"></script>
+	{% if datatables %}
+        <script src="/js/jquery.dataTables.min.js"></script>
+        <script src="/js/asteriskcdr.js"></script>
+	{% end %}
+        {% block head %}{% end %}
+    </head>
+    <body>
+        <div id="body">
+            <div id="head">
+                <h1>Asterisk Call Detail Records</h1>
+            </div>
+            <div id="content">
+                {% block content %}{% end %}
+            </div>
+            <div id="footer">
+                &copy; 2011 Stefan Agner. MIT-licensed.
+            </div>
+        </div>
+    </body>
+</html>
+

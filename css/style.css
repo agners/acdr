@@ -1,0 +1,49 @@
+/*
+http://colorschemedesigner.com/#3j21Tv-tHw0w0
+*/
+body {
+    background: #FFF;
+    color: #000;
+    margin: 0;
+    padding: 20px;
+    font: normal 10pt/12pt Arial, sans-serif;
+    text-align: center;
+}
+#body {
+    width: 800px;
+    position: relative;
+    margin: 0 auto;
+    text-align: left;
+}
+
+a               { color: #F5923D; }
+a:visited       { color: #994700; }
+a:hover         { color: #B16A2C; }
+a:visited:hover { color: #B16A2C; }
+
+h1 {
+    display: inline;
+    color: #01888F;
+    font: bold 20pt/24pt Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#topnav {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    font: normal 10pt/14pt Arial, sans-serif;
+}
+
+h2 {
+    font: bold 16pt/18pt Arial, sans-serif;
+    color: #EC6D00;
+    margin: 2em 0 0.5em;
+    padding: 0;
+}
+
+#footer {
+    clear: both;
+    font-size: smaller;
+}

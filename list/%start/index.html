@@ -1,0 +1,63 @@
+import asteriskcdr
+from asteriskcdr import elapsed_time
+from aspen import Response
+
+
+startpage = request.path['start']
+start = 0
+if startpage.isnumeric():
+    start = int(startpage)
+rows = asteriskcdr.cdr.read_page(start, 10, [])
+startprev = start - 10
+startnext = start + 10
+datatables = False
+
+# Function to cycle between odd and even rows in table
+def cycle(val, odd, even):
+    if val % 2 == 0:
+        return even
+    else:
+        return odd
+
+
+{% extends list.html %}
+{% block tablecontent %}
+  <tbody>
+    {% set i = 0 %}
+    {% for entry in rows %}
+    {% set i = i + 1 %}
+    <tr class="{{ cycle(i, 'odd', 'even') }}">
+      <td>{{ entry['src'] }}</td>
+      <td>{{ entry['dst'] }}</td>
+      {% if entry['disposition'] == 8 %}
+      <td>Answered</td>
+      {% elif entry['disposition'] == 4 %}
+      <td>No answer</td>
+      {% elif entry['disposition'] == 2 %}
+      <td>Busy</td>
+      {% elif entry['disposition'] == 0 %}
+      <td>None</td>
+      {% else %}
+      <td>Unknwon</td>
+      {% end %}
+      <td>{{ entry['answer'] }}</td>
+      <td>{{ entry['end'] }}</td>
+      <td>{{ elapsed_time(entry['duration']) }}</td>
+    </tr>
+    {% end %}
+  </tbody>
+{% end %}
+{% block aftercontent %}
+  <div class="dataTables_paginate paging_two_button" id="cdrentries_paginate">
+      {% if startprev >= 0 %}
+        <a href="/list/{{ startprev }}/" class="paginate_enabled_previous" title="Previous" id="cdrentries_previous"></a>
+      {% else %}
+        <div href="/list/{{ startprev }}/" class="paginate_disabled_previous" title="Previous" id="cdrentries_previous"></div>
+      {% end %}
+      {% if startnext < asteriskcdr.cdr.total() %}
+        <a href="/list/{{ startnext }}/" class="paginate_enabled_next" title="Next" id="cdrentries_next"></a>
+      {% else %}
+        <div href="/list/{{ startnext }}/" class="paginate_disabled_next" title="Next" id="cdrentries_next"></div>
+      {% end %}
+  </div>
+{% end %}

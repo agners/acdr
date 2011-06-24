@@ -1,0 +1,36 @@
+Asterisk is a great open-source PBX (private branch exchange) especially for 
+VoIP telephone infrastructures. Asterisk is able to save its CDR (call detail 
+records) to different storage location, such as CSV-File, MySQL database or 
+SQLite database. This project provides a webinterface for CDR's saved to a 
+SQLite database. It is using Aspen, a Python Web-Framework to archive this.
+
+Dependencies
+
+Asterisk Call Detail Records includes great open-source software:
+ * jQuery
+ * DataTables
+
+And builds upon great open-source software:
+ * Python
+ * Aspen
+ * SQLite
+
+Installation
+
+Using Ubuntu you can install needed Python Modules using apt-get. Aspen is 
+available through the Python Package Installer.
+
+$ sudo apt-get install python-sqlite python-pip
+$ sudo python-pip
+$ pip install aspen
+
+Get acdr from this git repository, and run it using aspen.
+$ aspen
+
+You can now point your Browser to http://localhost:8080/ to get the web 
+interface.
+
+Licence
+
+Source is provided under the terms of the MIT-licence.
+
