@@ -1,6 +1,6 @@
 import sqlite
 
-DISPLAY_COLUMNS = [ 'src', 'dst', 'disposition', 'answer', 'end', 'duration' ]
+DISPLAY_COLUMNS = [ 'AcctId', 'src', 'dst', 'disposition', 'answer', 'end', 'duration' ]
 SELECT = """\
     SELECT %(column)s
     FROM cdr

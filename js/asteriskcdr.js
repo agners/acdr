@@ -11,6 +11,7 @@ $(document).ready(function() {
 		"sAjaxSource": "/entries.json",
 		"aaSorting": [],
 		"aoColumns": [
+			{ "mDataProp": "AcctId", "bVisible": false },
 			{ "mDataProp": "src", "sWidth": "120px" },
 			{ "mDataProp": "dst", "sWidth": "120px" },
 			{ "mDataProp": "disposition", "sWidth": "60px",
@@ -38,6 +39,10 @@ $(document).ready(function() {
 						return (dur / 60).toFixed() + "min, " + (dur % 60) + "s";
 					else
 						return (dur % 60) + "s";
+				} },
+			{ "mDataProp": "detail", "sWidth": "80px", 
+				"fnRender": function ( oObj ) {
+					return "<a onclick=\"showDetail(" + oObj.aData.AcctId + ");\">Detail</a>";
 				} }
 		],
 		"fnServerData": function ( sSource, aoData, fnCallback ) {
@@ -50,12 +55,25 @@ $(document).ready(function() {
 			} );
 		}
 	} );
-	$("tfoot input").keyup( function () {
+	$("#cdrentries tfoot input").keyup( function () {
 		/* Filter on the column (the index) of this element */
 		oTable.fnFilter( this.value, $("tfoot th").index(this.parentNode) );
 	} );
-	$("tfoot select").change( function () {
+	$("#cdrentries tfoot select").change( function () {
 		/* Filter on the column (the index) of this element */
 		oTable.fnFilter( this.value, $("tfoot th").index(this.parentNode) );
 	} );
+/*
+	$("#cdrentries tbody").click( function(event) {
+		$(oTable.fnSettings().aoData).each(function (){
+			$(this.nTr).removeClass('row_selected');
+		});
+		$(event.target.parentNode).addClass('row_selected');
+	} );
+*/
 } );
+
+function showDetail(id)
+{
+	alert(id);
+};

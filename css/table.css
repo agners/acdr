@@ -298,11 +298,11 @@ td.details {
 }
 
 table.display tr.even.row_selected td {
-	background-color: #B0BED9;
+	background-color: #F6AD6F;
 }
 
 table.display tr.odd.row_selected td {
-	background-color: #9FAFD1;
+	background-color: #F6933E;
 }
 
 
