@@ -5,7 +5,7 @@ SELECT = """\
     SELECT %(column)s
     FROM cdr
     ORDER BY %(sort)s AcctId DESC 
-    LIMIT %(start)s, %(count)s
+    LIMIT %(start)d, %(count)d
 """
 
 SELECT_SEARCH = """\
@@ -13,7 +13,7 @@ SELECT_SEARCH = """\
     FROM cdr
     WHERE %(where)s
     ORDER BY %(sort)s AcctId DESC
-    LIMIT %(start)s, %(count)s
+    LIMIT %(start)d, %(count)d
 """
 
 class CDR(object):
@@ -36,13 +36,13 @@ class CDR(object):
         for searchcol in search:
             where = where + DISPLAY_COLUMNS[searchcolindex] + ' LIKE \'%' + searchcol + '%\' AND '
             searchcolindex = searchcolindex + 1
-        sql = SELECT_SEARCH % {'column': self._columns, 'sort': self.sort(sorting), 'where': where[:-5], 'start': start, 'count': count}
+        sql = SELECT_SEARCH % {'column': self._columns, 'sort': self.sort(sorting), 'where': where[:-5], 'start': int(start), 'count': int(count)}
         print sql
         self._curs.execute(sql)
         return self.read(count)
         
     def read_page(self, start, count, sorting):
-        sql = SELECT % {'column':self._columns, 'sort': self.sort(sorting), 'start': start, 'count': count}
+        sql = SELECT % {'column':self._columns, 'sort': self.sort(sorting), 'start': int(start), 'count': int(count)}
         print(sql)
         self._curs.execute(sql)
         return self.read(count)
